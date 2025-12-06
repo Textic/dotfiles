@@ -1,0 +1,10 @@
+backend = "fastresize"
+color_space = "lch"
+palette = "dark"
+#check_contrast = true
+#saturation = 35
+#alpha = 100
+
+[templates]
+hyprland.template = 'hyprland.conf'
+hyprland.target = '~/.config/hypr/colors.conf'
