@@ -8,3 +8,5 @@ palette = "dark"
 [templates]
 hyprland.template = 'hyprland.conf'
 hyprland.target = '~/.config/hypr/colors.conf'
+waybar.template = 'waybar.css'
+waybar.target = '~/.config/waybar/colors.css'
