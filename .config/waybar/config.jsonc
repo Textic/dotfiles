@@ -7,7 +7,11 @@
   "gtk-layer-shell": true,
   "passthrough": false,
   "fixed-center": true,
-  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-left": [
+    "hyprland/workspaces",
+    "tray",
+    "hyprland/window"
+  ],
   "modules-center": ["mpris"],
   "modules-right": [
     "cpu",
@@ -15,9 +19,8 @@
     "pulseaudio",
     "clock",
     "clock#simpleclock",
-    "tray",
-    "custom/notification",
-    "custom/power"
+    "custom/notification"
+    // "custom/power"
   ],
   "custom/spotify": {
     "format": "  {}",
@@ -88,7 +91,10 @@
       "headphone": "",
       "default": [" ", " ", " "]
     },
-    "on-click": "pavucontrol"
+    "on-click": "pamixer -t",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "pamixer -i 5",
+    "on-scroll-down": "pamixer -d 5"
   },
   "custom/sep": {
     "format": "|",

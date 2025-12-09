@@ -1,8 +1,7 @@
 # Module: Install Essential Packages
 
 # Package list
-# Package list (excluding fonts)
-PKGS="update-grub os-prober kitty waybar rofi hyprlock amixer alsa-utils networkmanager-dmenu-git nwg-look xorg-xrandr imagemagick btop Wallust"
+PKGS="update-grub os-prober kitty waybar rofi hyprlock alsa-utils wireplumber pamixer pavucontrol nwg-look xorg-xrandr xdg-desktop-portal-hyprland imagemagick btop wallust fastfetch"
 
 # Font list
 FONTS="ttf-jetbrains-mono-nerd ttf-cascadia-code-nerd ttf-font-awesome papirus-icon-theme"
