@@ -11,7 +11,8 @@ source ./scripts/01_yay.sh
 source ./scripts/02_packages.sh
 source ./scripts/03_sddm.sh
 source ./scripts/04_dotfiles.sh
-
+source ./scripts/05_wallpapers.sh
+source ./scripts/06_grub_themes.sh
 source ./scripts/99_final.sh
 
 echo_msg "All modules executed successfully!"
