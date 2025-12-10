@@ -1,0 +1,42 @@
+# ~/.config/wallust/templates/starship.toml
+
+# Use the palette feature of starship to define custom colors
+# These colors are replaced by wallust
+format = """
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$cmd_duration\
+$line_break\
+$character"""
+
+add_newline = false
+
+[directory]
+style = "bold {{color4}}"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+style = "bold {{color5}}"
+symbol = " "
+
+[git_status]
+style = "bold {{color1}}"
+
+[cmd_duration]
+style = "bold {{color3}}"
+format = "[$duration]($style)"
+
+[character]
+success_symbol = "[➜](bold {{color2}})"
+error_symbol = "[➜](bold {{color1}})"
+vimcmd_symbol = "[V](bold {{color2}})"
+
+[fill]
+symbol = " "
+
+# Define a palette using wallust colors (hex values)
+# We can use these directly in styles as seen above because wallust replaces them 
+# with the actual hex code (e.g. #ff0000) before starship sees the file.
