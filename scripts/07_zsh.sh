@@ -30,6 +30,19 @@ if ask_confirmation "Do you want to install Zsh, Starship and plugins?"; then
         echo "autoload -Uz compinit && compinit" >> "$ZSHRC"
     fi
 
+    # Enable History
+    if ! grep -q "HISTFILE" "$ZSHRC"; then
+        echo "" >> "$ZSHRC"
+        echo "# History Configuration" >> "$ZSHRC"
+        echo 'HISTFILE="$HOME/.zsh_history"' >> "$ZSHRC"
+        echo 'HISTSIZE=10000' >> "$ZSHRC"
+        echo 'SAVEHIST=10000' >> "$ZSHRC"
+        echo 'setopt EXTENDED_HISTORY' >> "$ZSHRC"
+        echo 'setopt SHARE_HISTORY' >> "$ZSHRC"
+        echo 'setopt APPEND_HISTORY' >> "$ZSHRC"
+        echo_msg "Configured Zsh History"
+    fi
+
     # Enable Autosuggestions
     if ! grep -q "zsh-autosuggestions.zsh" "$ZSHRC"; then
         echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> "$ZSHRC"

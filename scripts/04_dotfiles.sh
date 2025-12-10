@@ -1,6 +1,6 @@
 # Module: Deploy Dotfiles (Configurations and Fonts)
 
-if ask_confirmation "Do you want to deploy your configuration files (.config) and local fonts?"; then
+if ask_confirmation "Do you want to deploy your configuration files (config) and local fonts?"; then
     # Define source and target directories
     # We use 'dirname' on the main script path or assume we are running from root of the repo
     # Since this is sourced, BASH_SOURCE[0] might refer to this file itself.
@@ -10,7 +10,7 @@ if ask_confirmation "Do you want to deploy your configuration files (.config) an
     CURRENT_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
     REPO_ROOT="$(dirname "$CURRENT_SCRIPT_DIR")"
     
-    CONFIG_SRC="$REPO_ROOT/.config"
+    CONFIG_SRC="$REPO_ROOT/config"
     FONTS_SRC="$REPO_ROOT/fonts"
 
     CONFIG_DEST="$HOME/.config"

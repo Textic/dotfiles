@@ -17,3 +17,8 @@ else
 fi
 
 echo_msg "Final steps completed."
+
+if ask_confirmation "Do you want to reboot to apply all changes?"; then
+    echo_msg "Rebooting now..."
+    sudo reboot
+fi
