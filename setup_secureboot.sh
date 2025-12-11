@@ -28,7 +28,7 @@ echo "========================================================"
 
 # Install official packages automatically
 echo "-> Updating repositories and installing official tools..."
-pacman -Sy --needed --noconfirm grub efibootmgr sbsigntools openssl
+pacman -Sy --needed --noconfirm grub efibootmgr sbsigntools openssl mokutil
 
 # Check for shim-signed (AUR package)
 # We cannot install AUR packages as root easily/safely, so we just check for it.
@@ -69,6 +69,17 @@ else
     -subj "/CN=ArchLinuxMOK/"
     echo "-> Keys generated successfully."
 fi
+
+echo "-> Converting certificate to DER format (required for BIOS)..."
+openssl x509 -in "$KEY_DIR/MOK.crt" -out "$KEY_DIR/MOK.der" -outform DER
+
+echo "-> Importing key to MOK registry..."
+echo "--------------------------------------------------------"
+echo " ACTION REQUIRED: Enter a one-time password below."
+echo " REMEMBER THIS PASSWORD. You will need it after reboot."
+echo " TYPE AN EASY PASSWORD, LIKE '1234' OR 'password'"
+echo "--------------------------------------------------------"
+mokutil --import "$KEY_DIR/MOK.der"
 
 # ==============================================================================
 # 3. GRUB Installation (Monolithic)

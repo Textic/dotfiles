@@ -61,6 +61,16 @@ if ask_confirmation "Do you want to install GRUB themes and set 'yorha-1920x1080
     
     echo_msg "GRUB_THEME set to '$THEME_FILE_PATH'."
 
+    # Update GRUB_DISABLE_OS_PROBER line
+    # If GRUB_DISABLE_OS_PROBER is set (commented or not), replace it.
+    # If not present at all, append it.
+    if grep -q "^[#]*GRUB_DISABLE_OS_PROBER=" "$GRUB_CONFIG"; then
+        sudo sed -i "s|^[#]*GRUB_DISABLE_OS_PROBER=.*|GRUB_DISABLE_OS_PROBER=false|" "$GRUB_CONFIG"
+    else
+        echo "GRUB_DISABLE_OS_PROBER=false" | sudo tee -a "$GRUB_CONFIG" > /dev/null
+    fi
+    echo_msg "GRUB_DISABLE_OS_PROBER set to 'false'."
+
     # Update GRUB bootloader
     echo_msg "Updating GRUB bootloader..."
     if command -v update-grub &> /dev/null; then
