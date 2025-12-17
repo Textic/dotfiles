@@ -6,7 +6,6 @@ source ./scripts/00_utils.sh
 
 echo_msg "Starting modular installation..."
 
-# Run scripts one by one
 source ./scripts/01_yay.sh
 source ./scripts/02_packages.sh
 source ./scripts/03_sddm.sh
@@ -16,6 +15,8 @@ source ./scripts/06_grub_themes.sh
 source ./scripts/07_zsh.sh
 source ./scripts/08_yazi.sh
 source ./scripts/09_fzf.sh
-source ./scripts/99_final.sh
+source ./scripts/10_multilib.sh
+source ./scripts/11_pam_pin.sh
 
+source ./scripts/99_final.sh
 echo_msg "All modules executed successfully!"
