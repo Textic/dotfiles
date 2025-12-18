@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Module: Configure PIN Authentication for Sudo, SDDM, and Hyprlock
+# Module: Configure PIN Authentication for Sudo and SDDM
 
-if ask_confirmation "Do you want to configure a short PIN for Sudo, SDDM, and Hyprlock?"; then
+if ask_confirmation "Do you want to configure a short PIN for Sudo and SDDM?"; then
     echo_msg "Installing dependencies (libpam_pwdfile, whois)..."
     
     # 'whois' es necesario para el comando mkpasswd
@@ -54,7 +54,7 @@ if ask_confirmation "Do you want to configure a short PIN for Sudo, SDDM, and Hy
         local TARGET_FILE="$1"
         local SERVICE_NAME="$2"
 
-        # Check if file exists, if not create a default one (useful for hyprlock)
+        # Check if file exists, if not create a default one
         if [ ! -f "$TARGET_FILE" ]; then
             echo_msg "$TARGET_FILE not found. Creating default configuration..."
             # Default minimal config referencing system-auth
@@ -79,12 +79,10 @@ if ask_confirmation "Do you want to configure a short PIN for Sudo, SDDM, and Hy
     # 4. Configure PAM for SDDM
     configure_pam "/etc/pam.d/sddm" "sddm"
 
-    # 5. Configure PAM for HYPRLOCK
-    # Hyprlock uses /etc/pam.d/hyprlock. If it doesn't exist, it fails or fallbacks badly.
-    configure_pam "/etc/pam.d/hyprlock" "hyprlock"
+
 
     echo_msg "PIN Authentication configured successfully!"
-    echo_msg "You can now use your PIN for: Sudo, SDDM Login, and Hyprlock screen unlock."
+    echo_msg "You can now use your PIN for: Sudo and SDDM Login."
 
 else
     echo_msg "Skipping PIN configuration."
