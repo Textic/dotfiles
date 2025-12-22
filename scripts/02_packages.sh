@@ -2,7 +2,7 @@
 
 # Package list
 PKGS="update-grub os-prober kitty waybar rofi hyprlock alsa-utils wireplumber pamixer pavucontrol nwg-look xorg-xrandr xdg-desktop-portal-hyprland imagemagick btop wallust fastfetch
-ntfs-3g awww dosfstools exfatprogs plocate libnotify"
+ntfs-3g awww dosfstools exfatprogs plocate libnotify grim slurp wl-clipboard"
 
 # Font list
 FONTS="ttf-jetbrains-mono-nerd ttf-cascadia-code-nerd ttf-font-awesome papirus-icon-theme"
