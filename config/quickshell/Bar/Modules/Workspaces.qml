@@ -5,15 +5,13 @@ import QtQuick
 Rectangle {
     id: root
     
-    // ESTILO DE LA CÁPSULA
-    color: "#313244"        // Fondo grisáceo
-    radius: 15              // Bordes redondeados
-    height: 30              // Altura fija
-    width: row.width + 20   // El ancho se ajusta al contenido automáticamente
+    color: "#313244"
+    radius: 15
+    height: 30
+    width: row.width + 10
 
     anchors.verticalCenter: parent.verticalCenter
 
-    // Lógica para detectar ventanas
     property var occupied: Hyprland.workspaces.values.reduce((acc, curr) => {
         acc[curr.id] = curr.windows > 0;
         return acc;
@@ -25,7 +23,7 @@ Rectangle {
         spacing: 5
 
         Repeater {
-            model: 5 // Cantidad de workspaces a mostrar
+            model: 5
 
             Text {
                 property int wsId: index + 1
@@ -34,7 +32,7 @@ Rectangle {
 
                 text: isActive ? "" : (isOccupied ? "" : "") 
                 color: isActive ? "#fab387" : (isOccupied ? "#f38ba8" : "#585b70")
-                font.family: "Material Symbols Rounded" // Asegúrate de tener esta fuente o usa otra
+                font.family: "Material Symbols Rounded"
                 font.pixelSize: 13
                 
                 MouseArea {

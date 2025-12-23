@@ -21,13 +21,12 @@ Rectangle {
 
     Row {
         id: innerRow
-        anchors.centerIn: parent
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
         spacing: 10
 
-		add: Transition {
-            NumberAnimation { properties: "x"; duration: 300; easing.type: Easing.OutQuad }
-        }
-        move: Transition {
+		move: Transition {
             NumberAnimation { properties: "x"; duration: 300; easing.type: Easing.OutQuad }
         }
     }

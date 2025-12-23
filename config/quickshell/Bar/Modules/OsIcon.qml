@@ -8,10 +8,8 @@ Item {
     width: 30
     height: 30
 
-    // Propiedad para guardar la ruta encontrada
     property string iconSource: ""
 
-    // --- Lógica de detección ---
     FileView {
         id: osRelease
         path: "/etc/os-release"
@@ -22,8 +20,7 @@ Item {
                 return line ? line.split("=")[1].replace(/"/g, "") : "";
             }
             
-            // Buscamos iconos comunes de Arch
-            const osId = getValue("ID"); // ej: "arch"
+            const osId = getValue("ID");
             const names = [osId + "-logo", "distributor-logo-" + osId, "archlinux-icon", "start-here-arch"];
             
             for (let name of names) {
@@ -32,31 +29,23 @@ Item {
                     return;
                 }
             }
-            // Si llega aquí, es que no encontró nada en el sistema
             console.log("No se encontró icono del sistema para: " + osId);
         }
     }
 
-    // --- Visualización ---
-
-    // 1. Intentamos mostrar la Imagen
     Image {
         anchors.fill: parent
-        anchors.margins: 4 // Un poco de margen para que no toque los bordes
+        anchors.margins: 4
         source: root.iconSource
         fillMode: Image.PreserveAspectFit
-        visible: status === Image.Ready // Solo visible si cargó bien
+        visible: status === Image.Ready
     }
-
-    // 2. RESPALDO: Si la imagen falla, mostramos texto
     Text {
         anchors.centerIn: parent
-        text: "" // Icono de Arch (requiere Nerd Font) o usa "ARCH"
+        text: ""
         font.pixelSize: 20
-        color: "#1793d1" // Azul Arch
+        color: "#1793d1"
         font.bold: true
-        
-        // Visible solo si NO hay imagen cargada
         visible: root.iconSource === ""
     }
 
