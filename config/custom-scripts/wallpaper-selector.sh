@@ -22,7 +22,8 @@ if [ -n "$SELECTION" ]; then
         ln -sf "$FULL_PATH" "$LINK_PATH"
         awww img "$FULL_PATH" --transition-type grow --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 2
         wallust run "$FULL_PATH"
-	killall -SIGUSR2 waybar
+	killall quickshell
+	quickshell &
 
         notify-send "Wallpaper updated" "$SELECTION"
     else

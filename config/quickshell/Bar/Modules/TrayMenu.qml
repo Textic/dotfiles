@@ -20,10 +20,8 @@ PanelWindow {
     property int targetX: 0
     property var activeEntry: null
 
-    // Animation configuration similar to Caelestia
-    // Caelestia uses custom Bezier curves to give that "weighted" feel
     property int animDuration: 300
-    property var animCurve: [0.4, 0.0, 0.2, 1.0] // Standard "Material Design" curve
+    property var animCurve: [0.05, 0.7, 0.1, 1.0]
 
     function open(globalX, entry) {
         targetX = globalX
@@ -47,12 +45,10 @@ PanelWindow {
 
     Rectangle {
         id: menuBox
-        // Center relative to the icon, but keep within screen bounds
         x: Math.max(10, Math.min(root.width - width - 10, root.targetX - (width / 2)))
         y: 0
 
         width: 200
-        // Dynamic height with padding
         height: menuList.implicitHeight + 20
 
         color: "#313244"
@@ -67,8 +63,6 @@ PanelWindow {
             anchors.top: parent.top
         }
 
-        // --- REVERSE CORNERS ---
-        
         // Left corner (connects the bar with the left side of the menu)
         ReverseCorner {
             anchors.right: parent.left
@@ -76,7 +70,6 @@ PanelWindow {
             height: parent.radius
             width: height
             color: parent.color
-            // We use TopRight because we want the cutout at the top left (according to your logic in ReverseCorner.qml)
             type: ReverseCorner.CornerType.TopRight
         }
 
@@ -87,11 +80,10 @@ PanelWindow {
             height: parent.radius
             width: height
             color: parent.color
-            // We use TopLeft because we want the cutout at the top right
             type: ReverseCorner.CornerType.TopLeft
         }
 
-        // Small decorative top bar (Caelestia/iOS style)
+        // Small decorative top bar (iOS style)
         // Rectangle {
         //     width: 40; height: 4;
         //     color: Qt.lighter(parent.color, 1.2)
@@ -107,12 +99,8 @@ PanelWindow {
             onClicked: (mouse) => mouse.accepted = true
         }
 
-        // --- CAELESTIA STYLE ANIMATIONS ---
-        
-        // Caelestia animates opacity and sometimes height or position
         opacity: root.visible ? 1 : 0
         
-        // This transformation makes the menu grow from the top
         transform: Scale {
             origin.x: menuBox.width / 2
             origin.y: 0
@@ -147,7 +135,7 @@ PanelWindow {
             id: menuList
             width: parent.width
             anchors.top: parent.top
-            anchors.topMargin: 20 // More margin to respect the decorative bar
+            anchors.topMargin: 20
 
             QsMenuOpener {
                 id: menuOpener
@@ -176,14 +164,11 @@ PanelWindow {
                         visible: !modelData.isSeparator
                         anchors.fill: parent
                         
-                        // Icon (if it exists, although the basic SystemTray model sometimes doesn't expose it directly in the text)
-                        // Here we assume only text as in your original, but better styled.
-                        
                         Text {
                             text: modelData.text
                             color: "white"
                             font.pixelSize: 14
-                            font.weight: Font.Medium // Font slightly thicker
+                            font.weight: Font.Medium
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: parent.left
                             anchors.leftMargin: 12
