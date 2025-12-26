@@ -13,13 +13,13 @@ PanelWindow {
     anchors.left: true
     anchors.right: true
 
-	implicitHeight: 40
+	implicitHeight: 45
 	color: "#1e1e2e"
 
 	// Left
 	Row {
 		anchors.left: parent.left
-		anchors.leftMargin: 10
+		anchors.leftMargin: 15
 		anchors.verticalCenter: parent.verticalCenter
 		spacing: 15
 		
@@ -31,9 +31,11 @@ PanelWindow {
 		BarBox {
 			Workspaces {}
 			Separator {
-                visible: SystemTray.items.length > 0
+				visible: SystemTray.items.length > 0
+			}
+			SystemTray {
+                id: sysTray
             }
-			SystemTray {}
 		}
 	}
 
@@ -45,9 +47,14 @@ PanelWindow {
 	// Right
 	Row {
 		anchors.right: parent.right
-		anchors.rightMargin: 10
+		anchors.rightMargin: 15
+		spacing: 15
 		anchors.verticalCenter: parent.verticalCenter
 		
+		BarBox {
+			Network {}
+			Volume {}
+		}
 		Clock {}
 	}
 }

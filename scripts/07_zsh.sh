@@ -49,6 +49,12 @@ if ask_confirmation "Do you want to install Zsh, Starship and plugins?"; then
         echo_msg "Enabled zsh-autosuggestions"
     fi
 
+    # Enable Ctrl+Backspace word deletion
+    if ! grep -q "backward-kill-word" "$ZSHRC"; then
+        echo "bindkey '^H' backward-kill-word" >> "$ZSHRC"
+        echo_msg "Enabled Ctrl+Backspace word deletion"
+    fi
+
     # Enable Starship (Add before syntax highlighting if possible)
     if ! grep -q "starship init zsh" "$ZSHRC"; then
         echo 'eval "$(starship init zsh)"' >> "$ZSHRC"

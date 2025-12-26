@@ -1,42 +1,35 @@
 import Quickshell
 import QtQuick
 
-Row {
-    spacing: 5
+Column {
+    id: root
+    spacing: 2
+    anchors.verticalCenter: parent.verticalCenter
     
-    property string timeText: ""
-    property string dateText: ""
-
-    function updateTime() {
-        let now = new Date()
-        timeText = now.toLocaleTimeString(Qt.locale(), "hh:mm")
-        dateText = now.toLocaleDateString(Qt.locale(), "dd/MM")
+    SystemClock {
+        id: clock
+        precision: SystemClock.Minutes
     }
 
-    Timer {
-        id: timer
-        interval: 1000
-        running: true
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: parent.updateTime()
-    }
+    // MaterialIcon {
+    //     // Name of the icon
+    //     text: "calendar_month" 
+
+    //     anchors.horizontalCenter: parent.horizontalCenter
+    //     font.pixelSize: 22
+    //     color: "white" 
+    //     weight: 300
+    //     fill: 1
+    // }
 
     Text {
-        text: parent.timeText
-        color: "white"
+        anchors.horizontalCenter: parent.horizontalCenter
+        horizontalAlignment: Text.AlignHCenter
+        text: Qt.formatDateTime(clock.date, "hh\nmm")
+        font.family: "Hack Nerd Font"
         font.bold: true
-    }
-    
-    Text {
-        text: "•"
+        font.pixelSize: 15
         color: "white"
-        font.bold: true
-    }
-
-    Text {
-        text: parent.dateText
-        color: "white"
-        font.bold: true
+        lineHeight: 0.8
     }
 }

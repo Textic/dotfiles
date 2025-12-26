@@ -14,22 +14,17 @@ Item {
         id: osRelease
         path: "/etc/os-release"
         onLoaded: {
-            const lines = text.split("\n");
+            const lines = text().split("\n");
+            
             const getValue = (key) => {
                 const line = lines.find(l => l.startsWith(key + "="));
                 return line ? line.split("=")[1].replace(/"/g, "") : "";
             }
             
             const osId = getValue("ID");
-            const names = [osId + "-logo", "distributor-logo-" + osId, "archlinux-icon", "start-here-arch"];
-            
-            for (let name of names) {
-                if (Quickshell.iconPath(name)) {
-                    root.iconSource = Quickshell.iconPath(name);
-                    return;
-                }
-            }
-            console.log("No se encontró icono del sistema para: " + osId);
+            console.log("Detected System: " + osId);
+
+            root.iconSource = ""; 
         }
     }
 
@@ -38,15 +33,16 @@ Item {
         anchors.margins: 4
         source: root.iconSource
         fillMode: Image.PreserveAspectFit
-        visible: status === Image.Ready
+        visible: false 
     }
+
     Text {
         anchors.centerIn: parent
-        text: ""
+        text: ""  
         font.pixelSize: 20
         color: "#1793d1"
         font.bold: true
-        visible: root.iconSource === ""
+        visible: true
     }
 
     MouseArea {

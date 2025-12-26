@@ -27,7 +27,7 @@ Rectangle {
 
             Text {
                 property int wsId: index + 1
-                property bool isActive: Hyprland.focusedWorkspace.id === wsId
+                property bool isActive: Hyprland.focusedWorkspace?.id === wsId ?? false
                 property bool isOccupied: root.occupied[wsId] ?? false
 
                 text: isActive ? "" : (isOccupied ? "" : "") 
