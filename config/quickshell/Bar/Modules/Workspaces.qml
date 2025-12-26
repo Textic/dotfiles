@@ -1,11 +1,13 @@
 import Quickshell
 import Quickshell.Hyprland
 import QtQuick
+import "../.."
 
 Rectangle {
     id: root
     
-    color: "#313244"
+    // color: Colours.palette.m3surfaceContainer
+    color: "transparent"
     radius: 15
     height: 30
     width: row.width + 10
@@ -31,7 +33,7 @@ Rectangle {
                 property bool isOccupied: root.occupied[wsId] ?? false
 
                 text: isActive ? "" : (isOccupied ? "" : "") 
-                color: isActive ? "#fab387" : (isOccupied ? "#f38ba8" : "#585b70")
+                color: isActive ? Colours.palette.m3primary : (isOccupied ? Colours.palette.m3secondary : Colours.palette.m3surfaceContainerHigh)
                 font.family: "Material Symbols Rounded"
                 font.pixelSize: 13
                 

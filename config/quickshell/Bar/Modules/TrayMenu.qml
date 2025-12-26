@@ -3,6 +3,7 @@ import Quickshell.Wayland
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import QtQuick
+import "../.."
 
 PanelWindow {
     id: root
@@ -20,18 +21,23 @@ PanelWindow {
     property int targetX: 0
     property var activeEntry: null
 
-    property int animDuration: 300
-    property var animCurve: [0.05, 0.7, 0.1, 1.0]
+    Timer {
+        id: layoutTimer
+        interval: 10
+        onTriggered: menuBox.state = "visible"
+    }
 
     function open(globalX, entry) {
         targetX = globalX
         activeEntry = entry
         root.visible = true
+        menuBox.state = "hidden" 
+        // menuBox.state = "visible"
+        layoutTimer.restart()
     }
 
     function close() {
-        root.visible = false
-        activeEntry = null
+        menuBox.state = "hidden"
     }
 
     visible: false
@@ -45,17 +51,81 @@ PanelWindow {
 
     Rectangle {
         id: menuBox
+        
         x: Math.max(10, Math.min(root.width - width - 10, root.targetX - (width / 2)))
-        y: 0
-
-        width: 200
+        
         height: menuList.implicitHeight + 20
-
-        color: "#313244"
+        width: 200
+        
+        color: Colours.background
         radius: 20
 
-        // HACK: Patch rectangle to make top corners square
-        // This allows "ReverseCorners" to connect without gaps.
+        opacity: 1 
+        y: -height 
+        
+        state: "hidden"
+
+        states: [
+            State {
+                name: "visible"
+                PropertyChanges {
+                    target: menuBox
+                    y: 0
+                }
+            },
+            State {
+                name: "hidden"
+                PropertyChanges {
+                    target: menuBox
+                    y: -menuBox.height - 20
+                }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                from: "hidden"
+                to: "visible"
+                
+                NumberAnimation {
+                    target: menuBox
+                    property: "y"
+                    duration: 250
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.0
+                }
+            },
+            Transition {
+                from: "visible"
+                to: "hidden"
+
+                SequentialAnimation {
+                    NumberAnimation {
+                        target: menuBox
+                        property: "y"
+                        duration: 200
+                        easing.type: Easing.BezierSpline
+                        easing.bezierCurve: [0.2, 0.0, 0.0, 1.0]
+                    }
+                    
+                    ScriptAction {
+                        script: {
+                            root.visible = false
+                            root.activeEntry = null
+                        }
+                    }
+                }
+            }
+        ]
+
+        // Adjustment to hide the gap during the bounce animation
+        Rectangle {
+            color: parent.color
+            width: parent.width
+            height: 300
+            anchors.bottom: parent.top
+        }
+
         Rectangle {
             width: parent.width
             height: parent.radius
@@ -63,72 +133,30 @@ PanelWindow {
             anchors.top: parent.top
         }
 
-        // Left corner (connects the bar with the left side of the menu)
         ReverseCorner {
             anchors.right: parent.left
-            anchors.top: parent.top
+            // anchors.top: parent.top
+            y: -Math.max(0, parent.y)
             height: parent.radius
             width: height
             color: parent.color
             type: ReverseCorner.CornerType.TopRight
         }
 
-        // Right corner (connects the bar with the right side of the menu)
         ReverseCorner {
             anchors.left: parent.right
-            anchors.top: parent.top
+            // anchors.top: parent.top
+            y: -Math.max(0, parent.y)
             height: parent.radius
             width: height
             color: parent.color
             type: ReverseCorner.CornerType.TopLeft
         }
 
-        // Small decorative top bar (iOS style)
-        // Rectangle {
-        //     width: 40; height: 4;
-        //     color: Qt.lighter(parent.color, 1.2)
-        //     anchors.top: parent.top;
-        //     anchors.topMargin: 8
-        //     anchors.horizontalCenter: parent.horizontalCenter
-        //     radius: 2
-        // }
-
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.AllButtons
             onClicked: (mouse) => mouse.accepted = true
-        }
-
-        opacity: root.visible ? 1 : 0
-        
-        transform: Scale {
-            origin.x: menuBox.width / 2
-            origin.y: 0
-            yScale: root.visible ? 1 : 0
-            Behavior on yScale {
-                NumberAnimation {
-                    duration: root.animDuration
-                    easing.type: Easing.BezierSpline
-                    easing.bezierCurve: root.animCurve
-                }
-            }
-        }
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: root.animDuration
-                easing.type: Easing.BezierSpline
-                easing.bezierCurve: root.animCurve
-            }
-        }
-        
-        // Smooth animation if content changes size
-        Behavior on height {
-            NumberAnimation {
-                duration: root.animDuration
-                easing.type: Easing.BezierSpline
-                easing.bezierCurve: root.animCurve
-            }
         }
 
         Column {
@@ -144,10 +172,9 @@ PanelWindow {
 
             Repeater {
                 model: menuOpener.children
-
                 Rectangle {
                     width: parent.width - 20
-                    height: modelData.isSeparator ? 10 : 36 // A bit taller to facilitate clicking
+                    height: modelData.isSeparator ? 10 : 36
                     anchors.horizontalCenter: parent.horizontalCenter
                     color: "transparent"
 
@@ -159,7 +186,6 @@ PanelWindow {
                         anchors.centerIn: parent
                     }
 
-                    // Container for the interactive item
                     Item {
                         visible: !modelData.isSeparator
                         anchors.fill: parent
@@ -181,10 +207,8 @@ PanelWindow {
                             anchors.fill: parent
                             hoverEnabled: true
                             enabled: !modelData.isSeparator
-
                             onEntered: parent.parent.color = "#45475a"
                             onExited: parent.parent.color = "transparent"
-
                             onClicked: {
                                 modelData.triggered()
                                 root.close()

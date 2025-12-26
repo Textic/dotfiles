@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import "../.."
 
 Row {
     id: root
@@ -72,6 +73,6 @@ Row {
 
         text: getIcon()
         font.pixelSize: 22
-        color: "white"
+        color: Colours.foreground
     }
 }

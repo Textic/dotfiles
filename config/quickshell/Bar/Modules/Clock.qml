@@ -1,5 +1,6 @@
 import Quickshell
 import QtQuick
+import "../.."
 
 Column {
     id: root
@@ -29,7 +30,7 @@ Column {
         font.family: "Hack Nerd Font"
         font.bold: true
         font.pixelSize: 15
-        color: "white"
+        color: Colours.foreground
         lineHeight: 0.8
     }
 }

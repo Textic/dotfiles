@@ -3,9 +3,12 @@ import Quickshell.Wayland
 import Quickshell.Services.SystemTray
 import QtQuick
 import "Modules"
+import ".."
 
 PanelWindow {
 	id: root
+
+	screen: Quickshell.screens.find(s => s.name === "DP-1") || Quickshell.screens[0]
 
 	WlrLayershell.namespace: "topbar"
 	WlrLayershell.layer: WlrLayer.Top
@@ -15,7 +18,7 @@ PanelWindow {
     anchors.right: true
 
 	implicitHeight: 45
-	color: "#1e1e2e"
+	color: Colours.background
 
 	// Left
 	Row {
@@ -29,7 +32,10 @@ PanelWindow {
 			height: 15
 		}
 
-		BarBoxLeft {
+		BarBox {
+			idRight: false
+			spacing: 5
+			
 			Workspaces {}
 			Separator {
 				visible: SystemTray.items.length > 0
@@ -43,6 +49,8 @@ PanelWindow {
 	// Center
 	Row {
 		anchors.centerIn: parent
+
+		
 	}
 
 	// Right
@@ -52,7 +60,9 @@ PanelWindow {
 		spacing: 15
 		anchors.verticalCenter: parent.verticalCenter
 		
-		BarBoxRight {
+		BarBox {
+			idRight: true
+			
 			Network {}
 			Volume {}
 		}
