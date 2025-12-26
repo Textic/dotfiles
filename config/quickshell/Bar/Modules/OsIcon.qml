@@ -47,6 +47,6 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: console.log("Click en el logo")
+        onClicked: console.log("Click on the logo")
     }
 }

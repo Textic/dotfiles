@@ -6,18 +6,18 @@ Row {
     id: root
     spacing: 5
 
-    // 1. Obtenemos el Sink por defecto
+    // 1. Get the default Sink
     property var audioSink: Pipewire.defaultAudioSink
 
-    // 2. [SOLUCIÓN CRÍTICA] Tracker de Objetos
-    // Esto es lo que faltaba. Sin esto, el Sink se queda "unbound" (desconectado)
-    // y por eso da error al intentar cambiar el volumen y devuelve 0% al leerlo.
+    // 2. [CRITICAL SOLUTION] Object Tracker
+    // This was what was missing. Without this, the Sink remains "unbound" (disconnected)
+    // and that's why it errors when trying to change volume and returns 0% when reading it.
     PwObjectTracker {
-        // Le decimos a Quickshell: "Mantén este objeto vivo y actualizado"
+        // We tell Quickshell: "Keep this object alive and updated"
         objects: root.audioSink ? [root.audioSink] : []
     }
 
-    // 3. Lógica segura de lectura
+    // 3. Safe reading logic
     function getSafeVolume() {
         if (!audioSink || !audioSink.audio) return 0;
         return audioSink.audio.volume ?? 0;
@@ -30,7 +30,7 @@ Row {
         return audioSink.audio.muted ?? true;
     }
 
-    // 4. Icono y lógica visual
+    // 4. Icon and visual logic
     function getVolumeIcon(volume, muted) {
         if (muted) return "no_sound";
         if (volume >= 0.5) return "volume_up";
@@ -52,12 +52,12 @@ Row {
             // Click: Mute / Unmute
             onClicked: {
                 if (root.audioSink && root.audioSink.audio) {
-                    // Ahora que tenemos el Tracker, esto debería funcionar sin error "unbound"
+                    // Now that we have the Tracker, this should work without "unbound" error
                     root.audioSink.audio.muted = !root.isMuted
                 }
             }
 
-            // Rueda: Subir / Bajar volumen
+            // Wheel: Increase / Decrease volume
             onWheel: (wheel) => {
                 if (root.audioSink && root.audioSink.audio) {
                     var step = 0.05
@@ -69,7 +69,7 @@ Row {
                     
                     root.audioSink.audio.volume = newVol
                     
-                    // Si subes volumen, quitar mute automáticamente
+                    // If volume is increased, automatically unmute
                     if (wheel.angleDelta.y > 0 && root.isMuted) {
                         root.audioSink.audio.muted = false
                     }
@@ -89,8 +89,8 @@ Row {
         font.pixelSize: 14
     }
     
-    // Debug para confirmar que ahora sí está "bound" (conectado)
+    // Debug to confirm it is now "bound" (connected)
     onAudioSinkChanged: {
-        if (audioSink) console.log("[Volume] Sink conectado y rastreado:", audioSink.description)
+        if (audioSink) console.log("[Volume] Sink connected and tracked:", audioSink.description)
     }
 }
