@@ -1,5 +1,6 @@
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Services.SystemTray
 import QtQuick
 import "Modules"
 
@@ -28,12 +29,12 @@ PanelWindow {
 			height: 15
 		}
 
-		BarBox {
+		BarBoxLeft {
 			Workspaces {}
 			Separator {
 				visible: SystemTray.items.length > 0
 			}
-			SystemTray {
+			Tray {
                 id: sysTray
             }
 		}
@@ -51,7 +52,7 @@ PanelWindow {
 		spacing: 15
 		anchors.verticalCenter: parent.verticalCenter
 		
-		BarBox {
+		BarBoxRight {
 			Network {}
 			Volume {}
 		}

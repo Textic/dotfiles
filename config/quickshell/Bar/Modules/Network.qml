@@ -72,6 +72,6 @@ Row {
 
         text: getIcon()
         font.pixelSize: 22
-        color: "white" 
+        color: "white"
     }
 }
