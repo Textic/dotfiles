@@ -18,7 +18,7 @@ PanelWindow {
     anchors.right: true
 
 	implicitHeight: 45
-	color: Colours.background
+	color: Colours.m3primary
 
 	UnifiedMenu {
 		id: sharedMenu

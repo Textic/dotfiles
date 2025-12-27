@@ -10,14 +10,14 @@ Rectangle {
 	required property LockContext context
 	readonly property ColorGroup colors: Window.active ? palette.active : palette.inactive
 
-	readonly property color c_background: "#1e1e2e"
-    readonly property color c_text_main:  "#cdd6f4"
-    readonly property color c_text_sec:   "#a6adc8"
-    readonly property color c_input_text: "#cdd6f4"
+	readonly property color c_background: Colours.m3background
+    readonly property color c_text_main:  Colours.m3onBackground
+    readonly property color c_text_sec:   Colours.m3onSurfaceVariant
+    readonly property color c_input_text: Colours.m3onBackground
 
 	property var date: new Date();
 
-	color: "black"
+	color: Colours.m3background
 	property bool isImageLoaded: backgroundImage.status === Image.Ready
 
 	opacity: isImageLoaded ? 1 : 0
@@ -33,7 +33,7 @@ Rectangle {
 
 	Rectangle {
         anchors.fill: parent
-        color: "black"
+        color: Colours.m3background
     }
 
 	Image {
@@ -78,7 +78,7 @@ Rectangle {
 		font.weight: Font.ExtraBold
 
 		style: Text.Outline;
-		styleColor: "#000000"
+		styleColor: Colours.m3shadow
 	}
 
 	Text {
@@ -94,7 +94,7 @@ Rectangle {
 		font.weight: Font.ExtraBold
 
 		style: Text.Outline;
-		styleColor: "#000000"
+		styleColor: Colours.m3shadow
 	}
 
 	Text {

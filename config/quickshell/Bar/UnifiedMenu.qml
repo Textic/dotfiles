@@ -3,7 +3,7 @@ import Quickshell.Wayland
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import QtQuick
-import "./Modules"
+import "Modules"
 import ".."
 
 PanelWindow {
@@ -72,7 +72,7 @@ PanelWindow {
         width: contentStack.implicitWidth
         height: contentStack.implicitHeight + 20
         
-        color: Colours.background
+        color: Colours.m3primary
         radius: 20
 
         Behavior on x { NumberAnimation { duration: 250; easing.type: Easing.OutQuart } }
@@ -203,7 +203,7 @@ PanelWindow {
                             
                             Rectangle {
                                 visible: modelData.isSeparator
-                                width: parent.width; height: 1; color: "#585b70"; anchors.centerIn: parent
+                                width: parent.width; height: 1; color: Colours.m3outlineVariant; anchors.centerIn: parent
                             }
 
                             Item {
@@ -211,7 +211,7 @@ PanelWindow {
                                 anchors.fill: parent
                                 Text {
                                     text: modelData.text
-                                    color: "white"; font.pixelSize: 14; font.weight: Font.Medium
+                                    color: Colours.m3onPrimary; font.pixelSize: 14; font.weight: Font.Medium
                                     anchors.verticalCenter: parent.verticalCenter
                                     anchors.left: parent.left; anchors.leftMargin: 12
                                     anchors.right: parent.right; anchors.rightMargin: 12
@@ -219,7 +219,7 @@ PanelWindow {
                                 }
                                 MouseArea {
                                     anchors.fill: parent; hoverEnabled: true
-                                    onEntered: parent.parent.color = "#45475a"
+                                    onEntered: parent.parent.color = Colours.m3surfaceContainerHigh
                                     onExited: parent.parent.color = "transparent"
                                     onClicked: { modelData.triggered(); root.close() }
                                 }
@@ -243,13 +243,13 @@ PanelWindow {
                     width: parent.width - 30
                     height: 24
                     anchors.centerIn: parent
-                    color: "#45475a"
+                    color: Colours.m3surfaceContainerHighest
                     radius: height / 2
 
                     Rectangle {
                         height: parent.height
                         width: parent.width * Math.min(1, Math.max(0, (audio?.audio?.volume ?? 0)))
-                        color: "#89b4fa"
+                        color: Colours.m3primary
                         radius: parent.radius
                     }
                     MouseArea {

@@ -40,7 +40,7 @@ Item {
         anchors.centerIn: parent
         text: ""  
         font.pixelSize: 20
-        color: "#1793d1"
+        color: Colours.m3onPrimary
         font.bold: true
         visible: true
     }

@@ -9,7 +9,7 @@ Canvas {
     implicitHeight: 20
 
     // Color must match your menu background
-    property color color: "#313244" 
+    property color color: Colours.m3surface 
 
     // Corner types depending on where the "solid" part is
     enum CornerType {

@@ -33,7 +33,7 @@ Rectangle {
                 property bool isOccupied: root.occupied[wsId] ?? false
 
                 text: isActive ? "" : (isOccupied ? "" : "") 
-                color: isActive ? Colours.palette.m3primary : (isOccupied ? Colours.palette.m3secondary : Colours.palette.m3surfaceContainerHigh)
+                color: isActive ? Colours.m3primary : (isOccupied ? Colours.m3secondary : Colours.m3outline) // test
                 font.family: "Material Symbols Rounded"
                 font.pixelSize: 13
                 

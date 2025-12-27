@@ -8,7 +8,7 @@ Rectangle {
     property alias spacing: innerRow.spacing
     property bool idRight: false
 
-    color: Colours.palette.m3surfaceContainer
+    color: Colours.m3surface // test
     radius: 15
     height: 30
     

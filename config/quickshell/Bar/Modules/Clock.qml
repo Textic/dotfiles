@@ -30,7 +30,7 @@ Column {
         font.family: "Hack Nerd Font"
         font.bold: true
         font.pixelSize: 15
-        color: Colours.foreground
+        color: Colours.m3onPrimary
         lineHeight: 0.8
     }
 }

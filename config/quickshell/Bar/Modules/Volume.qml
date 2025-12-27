@@ -49,7 +49,7 @@ Row {
             if (root.vol > 0) return "volume_down";
             return "volume_mute";
         }
-        color: root.isMuted ? Colours.palette.m3surfaceContainerHigh : Colours.foreground
+        color: root.isMuted ? Colours.m3error : Colours.m3onSurface // test
         font.pixelSize: 22
 
         MouseArea {
@@ -60,8 +60,12 @@ Row {
             onClicked: (mouse) => {
                 if (mouse.button === Qt.RightButton) {
                     if (root.menuRef) {
-                        let pos = interactArea.mapToGlobal(interactArea.width / 2, 0);
-                        root.menuRef.open(pos.x, "volume", root.audioSink);
+                        if (root.menuRef.visible && root.menuRef.activeType === "volume") {
+                            root.menuRef.close();
+                        } else {
+                            let pos = interactArea.mapToGlobal(interactArea.width / 2, 0);
+                            root.menuRef.open(pos.x, "volume", root.audioSink);
+                        }
                     }
                 } else {
                     if (root.audioSink?.audio) root.audioSink.audio.muted = !root.isMuted
@@ -102,7 +106,7 @@ Row {
             anchors.leftMargin: 5
             
             text: Math.round(root.vol * 100) + "%"
-            color: Colours.foreground
+            color: Colours.m3onSurface // test
             font.family: "Lexend"
             font.bold: true
             font.pixelSize: 14

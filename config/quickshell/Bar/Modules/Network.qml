@@ -73,6 +73,6 @@ Row {
 
         text: getIcon()
         font.pixelSize: 22
-        color: Colours.foreground
+        color: Colours.m3onSurface // test
     }
 }
