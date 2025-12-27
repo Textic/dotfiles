@@ -65,10 +65,12 @@ PanelWindow {
     Rectangle {
         id: menuBox
         
-        x: Math.max(10, Math.min(root.width - width - 10, root.targetX - (width / 2)))
+        // x: Math.max(10, Math.min(root.width - width - 10, root.targetX - (width / 2)))
+        // New calculation to avoid overloading the menu animation for x and width
+        x: Math.max(10, Math.min(root.width - contentStack.implicitWidth - 10, root.targetX - (contentStack.implicitWidth / 2)))
         
-        width: contentLoader.implicitWidth
-        height: contentLoader.implicitHeight + 20
+        width: contentStack.implicitWidth
+        height: contentStack.implicitHeight + 20
         
         color: Colours.background
         radius: 20
@@ -139,23 +141,43 @@ PanelWindow {
 
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; onClicked: (mouse) => mouse.accepted = true }
 
-        Loader {
-            id: contentLoader
+        Item {
+            id: contentStack
             anchors.top: parent.top
             anchors.topMargin: 10
             anchors.horizontalCenter: parent.horizontalCenter
+
+            implicitWidth: currentItem ? currentItem.implicitWidth : 0
+            implicitHeight: currentItem ? currentItem.implicitHeight : 0
+
+            readonly property Item currentItem: {
+                if (root.activeType === "tray") return trayLoader.item
+                if (root.activeType === "volume") return volumeLoader.item
+                return null
+            }
             
-            sourceComponent: {
-                if (root.activeType === "tray") return trayComponent;
-                if (root.activeType === "volume") return volumeComponent;
-                return null;
+            Loader {
+                id: trayLoader
+                active: true 
+                visible: root.activeType === "tray"
+                sourceComponent: trayComponent
+                opacity: visible ? 1 : 0
+                Behavior on opacity { NumberAnimation { duration: 200 } }
+            }
+
+            Loader {
+                id: volumeLoader
+                active: true
+                visible: root.activeType === "volume"
+                sourceComponent: volumeComponent
+                
+                opacity: visible ? 1 : 0
+                Behavior on opacity { NumberAnimation { duration: 200 } }
             }
         }
 
-        // 1. Componente del TRAY (Iconos del sistema)
         Component {
             id: trayComponent
-            // Envolvemos la columna en un Item para poder usar implicitWidth
             Item {
                 implicitWidth: 200
                 implicitHeight: menuColumn.implicitHeight
