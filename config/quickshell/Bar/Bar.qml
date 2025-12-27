@@ -20,6 +20,10 @@ PanelWindow {
 	implicitHeight: 45
 	color: Colours.background
 
+	UnifiedMenu {
+		id: sharedMenu
+	}
+
 	// Left
 	Row {
 		anchors.left: parent.left
@@ -42,6 +46,7 @@ PanelWindow {
 			}
 			Tray {
                 id: sysTray
+				menuRef: sharedMenu
             }
 		}
 	}
@@ -64,7 +69,9 @@ PanelWindow {
 			idRight: true
 			
 			Network {}
-			Volume {}
+			Volume {
+				menuRef: sharedMenu
+			}
 		}
 		Clock {}
 	}

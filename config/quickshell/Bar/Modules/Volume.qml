@@ -7,6 +7,8 @@ Row {
     id: root
     spacing: 0
 
+    property var menuRef: null
+
     property var audioSink: Pipewire.defaultAudioSink
     PwObjectTracker { objects: root.audioSink ? [root.audioSink] : [] }
 
@@ -51,8 +53,20 @@ Row {
         font.pixelSize: 22
 
         MouseArea {
+            id: interactArea
             anchors.fill: parent
-            onClicked: if (root.audioSink?.audio) root.audioSink.audio.muted = !root.isMuted
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            
+            onClicked: (mouse) => {
+                if (mouse.button === Qt.RightButton) {
+                    if (root.menuRef) {
+                        let pos = interactArea.mapToGlobal(interactArea.width / 2, 0);
+                        root.menuRef.open(pos.x, "volume", root.audioSink);
+                    }
+                } else {
+                    if (root.audioSink?.audio) root.audioSink.audio.muted = !root.isMuted
+                }
+            }
             onWheel: (wheel) => root.changeVolume(wheel.angleDelta.y)
         }
     }

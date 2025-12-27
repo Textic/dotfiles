@@ -1,9 +1,12 @@
 import Quickshell
 import Quickshell.Services.SystemTray
 import QtQuick
+import "../"
 
 Item {
     id: root
+
+    property var menuRef: null
     
     implicitHeight: innerRow.implicitHeight
     
@@ -19,10 +22,6 @@ Item {
     }
 
     clip: true
-
-    TrayMenu {
-        id: connectedMenu
-    }
 
     Row {
         id: innerRow
@@ -53,15 +52,11 @@ Item {
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     
                     onClicked: (mouse) => {
-                        if (mouse.button === Qt.RightButton) {
-                            if (connectedMenu.visible && connectedMenu.activeEntry === modelData) {
-                                connectedMenu.close();
-                            } else {
-                                let pos = trayIcon.mapToGlobal(trayIcon.width / 2, 0);
-                                connectedMenu.open(pos.x, modelData);
-                            }
+                        if (root.menuRef.visible && root.menuRef.activeData === modelData) {
+                            root.menuRef.close();
                         } else {
-                            modelData.activate();
+                            let pos = trayIcon.mapToGlobal(trayIcon.width / 2, 0);
+                            root.menuRef.open(pos.x, "tray", modelData);
                         }
                     }
                 }
